@@ -180,11 +180,11 @@ a:hover { color: #dfc87a; }
 }
 
 .hero__title {
-  font-family: var(--font-display);
+  font-family: 'MADE Evolve Sans EVO', var(--font-body), sans-serif;
   font-size: clamp(2.5rem, 10vw, 5.5rem);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   margin: 0;
 }
 
@@ -396,7 +396,7 @@ a:hover { color: #dfc87a; }
 }
 
 .team__featured-caption p + p {
-  margin-top: 0.75rem;
+  margin-top: 1.25rem;
 }
 
 .team__grid {
@@ -559,7 +559,12 @@ a:hover { color: #dfc87a; }
 }
 
 .gallery__item:nth-child(5) {
-  grid-column: 5 / 13;
+  grid-column: 5 / 9;
+  grid-row: 3;
+}
+
+.gallery__item:nth-child(6) {
+  grid-column: 9 / 13;
   grid-row: 3;
 }
 
@@ -603,7 +608,8 @@ a:hover { color: #dfc87a; }
   .gallery__item--side,
   .gallery__item:nth-child(3),
   .gallery__item:nth-child(4),
-  .gallery__item:nth-child(5) {
+  .gallery__item:nth-child(5),
+  .gallery__item:nth-child(6) {
     grid-column: auto;
     grid-row: auto;
     aspect-ratio: 4 / 3;

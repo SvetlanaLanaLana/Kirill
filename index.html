@@ -180,29 +180,20 @@
           <p class="section__subtitle">Моменты с показов и фестивалей</p>
         </div>
         <div class="gallery__grid">
-          <button class="gallery__item reveal" data-index="0" aria-label="Открыть фото 1">
-            <img src="images/event-1.jpg" alt="Мероприятие 1" loading="lazy"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.3em%22%3EФото 1%3C/text%3E%3C/svg%3E'">
+          <button class="gallery__item gallery__item--hero reveal" data-index="0" aria-label="Открыть фото 1">
+            <img src="images/1.jpg" alt="Мероприятие 1" loading="lazy">
           </button>
-          <button class="gallery__item reveal" data-index="1" aria-label="Открыть фото 2">
-            <img src="images/event-2.jpg" alt="Мероприятие 2" loading="lazy"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.3em%22%3EФото 2%3C/text%3E%3C/svg%3E'">
+          <button class="gallery__item gallery__item--side reveal" data-index="1" aria-label="Открыть фото 2">
+            <img src="images/1.2.jpg" alt="Мероприятие 2" loading="lazy">
           </button>
           <button class="gallery__item reveal" data-index="2" aria-label="Открыть фото 3">
-            <img src="images/event-3.jpg" alt="Мероприятие 3" loading="lazy"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.3em%22%3EФото 3%3C/text%3E%3C/svg%3E'">
+            <img src="images/3.jpg" alt="Мероприятие 3" loading="lazy">
           </button>
           <button class="gallery__item reveal" data-index="3" aria-label="Открыть фото 4">
-            <img src="images/event-4.jpg" alt="Мероприятие 4" loading="lazy"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.3em%22%3EФото 4%3C/text%3E%3C/svg%3E'">
+            <img src="images/4.jpg" alt="Мероприятие 4" loading="lazy">
           </button>
           <button class="gallery__item reveal" data-index="4" aria-label="Открыть фото 5">
-            <img src="images/event-5.jpg" alt="Мероприятие 5" loading="lazy"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.3em%22%3EФото 5%3C/text%3E%3C/svg%3E'">
-          </button>
-          <button class="gallery__item reveal" data-index="5" aria-label="Открыть фото 6">
-            <img src="images/event-6.jpg" alt="Мероприятие 6" loading="lazy"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.3em%22%3EФото 6%3C/text%3E%3C/svg%3E'">
+            <img src="images/5.jpg" alt="Мероприятие 5" loading="lazy">
           </button>
         </div>
       </div>
@@ -221,13 +212,16 @@
             <ul class="contact__links">
               <li>
                 <span class="contact__icon">✉</span>
-                <a href="mailto:contact@logline-film.ru">contact@logline-film.ru</a>
+                <button type="button" class="contact__link-btn" id="contact-email-link">kirill.heikkinen@ya.ru</button>
               </li>
               <li>
                 <span class="contact__icon">📱</span>
                 <a href="https://t.me/your_username" target="_blank" rel="noopener">Telegram</a>
               </li>
             </ul>
+            <button type="button" class="btn btn--outline contact__write-btn reveal" id="contact-open-btn">
+              Написать нам
+            </button>
           </div>
 
           <form class="contact-form reveal" id="festival-form">
@@ -253,6 +247,7 @@
             </div>
             <button type="submit" class="btn btn--primary btn--full">Отправить заявку</button>
             <p class="form-success" hidden>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+            <p class="form-error" hidden>Не удалось отправить заявку. Попробуйте позже или напишите на kirill.heikkinen@ya.ru</p>
           </form>
         </div>
       </div>
@@ -300,6 +295,7 @@
           </div>
           <button type="submit" class="btn btn--outline">Отправить отзыв</button>
           <p class="form-success" hidden>Спасибо за ваш отзыв!</p>
+          <p class="form-error" hidden>Не удалось отправить отзыв. Попробуйте позже.</p>
         </form>
       </div>
     </section>
@@ -307,11 +303,42 @@
 
   <footer class="footer">
     <div class="container footer__inner">
-      <p class="footer__title">Логлайн</p>
+      <p class="footer__title">Две судьбы</p>
       <p class="footer__copy">© 2025–2026. Автор, оператор и режиссёр — Кирилл Хейккинен</p>
       <a href="#top" class="footer__top">Наверх ↑</a>
     </div>
   </footer>
+
+  <!-- Contact modal -->
+  <div class="modal" id="contact-modal" hidden aria-hidden="true" role="dialog" aria-labelledby="contact-modal-title">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel">
+      <button type="button" class="modal__close" aria-label="Закрыть" data-close-modal>&times;</button>
+      <form class="contact-form" id="contact-popup-form" novalidate>
+        <h3 class="contact-form__title" id="contact-modal-title">Написать нам</h3>
+        <div class="form-group">
+          <label for="popup-name">Имя</label>
+          <input type="text" id="popup-name" name="name" required placeholder="Ваше имя" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="popup-contact">Телефон или e-mail</label>
+          <input type="text" id="popup-contact" name="contact" required placeholder="+7 … или email@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="popup-message">Сообщение</label>
+          <textarea id="popup-message" name="message" rows="4" required
+                    placeholder="Ваш вопрос или предложение…"></textarea>
+        </div>
+        <div class="form-checkbox">
+          <input type="checkbox" id="popup-consent" name="consent" required>
+          <label for="popup-consent">Даю согласие на обработку моих персональных данных</label>
+        </div>
+        <button type="submit" class="btn btn--primary btn--full">Отправить заявку</button>
+        <p class="form-success" hidden>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+        <p class="form-error" hidden>Не удалось отправить заявку. Попробуйте позже или напишите на kirill.heikkinen@ya.ru</p>
+      </form>
+    </div>
+  </div>
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" hidden>

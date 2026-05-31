@@ -1,4 +1,12 @@
 /* ===== Variables ===== */
+@font-face {
+  font-family: 'MADE Evolve Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/made-evolve-sans-regular.woff') format('woff');
+}
+
 :root {
   --bg: #0a0a0a;
   --bg-elevated: #111111;
@@ -180,11 +188,11 @@ a:hover { color: #dfc87a; }
 }
 
 .hero__title {
-  font-family: 'MADE Evolve Sans EVO', var(--font-body), sans-serif;
+  font-family: 'MADE Evolve Sans', var(--font-body), sans-serif;
   font-size: clamp(2.5rem, 10vw, 5.5rem);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   margin: 0;
 }
 

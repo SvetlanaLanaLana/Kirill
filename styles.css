@@ -558,7 +558,7 @@ a:hover { color: #dfc87a; }
 
 .gallery__item--trio {
   grid-column: span 2;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
 }
 
 .gallery__item img {
@@ -603,7 +603,7 @@ a:hover { color: #dfc87a; }
 
   .gallery__item--trio {
     grid-column: span 1;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
   }
 
   .gallery__item--trio:last-child {
@@ -621,11 +621,16 @@ a:hover { color: #dfc87a; }
   }
 
   .gallery__item--hero,
-  .gallery__item--pair,
-  .gallery__item--trio {
+  .gallery__item--pair {
     grid-column: 1 / -1;
     max-width: none;
     aspect-ratio: 3 / 2;
+  }
+
+  .gallery__item--trio {
+    grid-column: 1 / -1;
+    max-width: none;
+    aspect-ratio: 3 / 4;
   }
 }
 

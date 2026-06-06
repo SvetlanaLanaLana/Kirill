@@ -530,10 +530,10 @@ a:hover { color: #dfc87a; }
 
 .gallery__grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: minmax(175px, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
-  max-width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
 }
 
 .gallery__item {
@@ -547,33 +547,18 @@ a:hover { color: #dfc87a; }
 }
 
 .gallery__item--hero {
-  grid-column: 1 / 9;
-  grid-row: 1 / 3;
+  grid-column: 1 / -1;
+  aspect-ratio: 3 / 2;
 }
 
-.gallery__item--side {
-  grid-column: 9 / 13;
-  grid-row: 1;
+.gallery__item--pair {
+  grid-column: span 3;
+  aspect-ratio: 3 / 2;
 }
 
-.gallery__item:nth-child(3) {
-  grid-column: 9 / 13;
-  grid-row: 2;
-}
-
-.gallery__item:nth-child(4) {
-  grid-column: 1 / 5;
-  grid-row: 3;
-}
-
-.gallery__item:nth-child(5) {
-  grid-column: 5 / 9;
-  grid-row: 3;
-}
-
-.gallery__item:nth-child(6) {
-  grid-column: 9 / 13;
-  grid-row: 3;
+.gallery__item--trio {
+  grid-column: span 2;
+  aspect-ratio: 4 / 3;
 }
 
 .gallery__item img {
@@ -601,26 +586,31 @@ a:hover { color: #dfc87a; }
   outline-offset: 2px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   .gallery__grid {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: none;
+    max-width: 100%;
   }
 
   .gallery__item--hero {
     grid-column: 1 / -1;
-    grid-row: auto;
-    aspect-ratio: 16 / 9;
   }
 
-  .gallery__item--side,
-  .gallery__item:nth-child(3),
-  .gallery__item:nth-child(4),
-  .gallery__item:nth-child(5),
-  .gallery__item:nth-child(6) {
-    grid-column: auto;
-    grid-row: auto;
+  .gallery__item--pair {
+    grid-column: span 1;
     aspect-ratio: 4 / 3;
+  }
+
+  .gallery__item--trio {
+    grid-column: span 1;
+    aspect-ratio: 4 / 3;
+  }
+
+  .gallery__item--trio:last-child {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin-inline: auto;
+    width: 100%;
   }
 }
 
@@ -631,8 +621,10 @@ a:hover { color: #dfc87a; }
   }
 
   .gallery__item--hero,
-  .gallery__item--side,
-  .gallery__item:nth-child(n) {
+  .gallery__item--pair,
+  .gallery__item--trio {
+    grid-column: 1 / -1;
+    max-width: none;
     aspect-ratio: 3 / 2;
   }
 }

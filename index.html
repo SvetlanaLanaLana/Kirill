@@ -152,19 +152,12 @@
             <p class="vertical-video__caption">Показ 1</p>
           </article>
           <article class="vertical-video reveal">
-            <div class="vertical-video__frame vertical-video__frame--placeholder">
-              <!-- Второе видео — добавьте файл и раскомментируйте -->
-              <div class="vertical-video__coming">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <polygon points="5,3 19,12 5,21" fill="currentColor"/>
-                </svg>
-                <p>Второе видео<br>скоро</p>
-              </div>
-              <!--
-              <video controls playsinline poster="images/screening-2-poster.jpg">
-                <source src="videos/screening-2.mp4" type="video/mp4">
+            <div class="vertical-video__frame">
+              <video controls playsinline>
+                <source src="videos/show2.mov" type="video/quicktime">
+                <source src="videos/show2.mov" type="video/mp4">
+                Ваш браузер не поддерживает воспроизведение видео.
               </video>
-              -->
             </div>
             <p class="vertical-video__caption">Показ 2</p>
           </article>
@@ -183,19 +176,19 @@
           <button class="gallery__item gallery__item--hero reveal" data-index="0" aria-label="Открыть фото 1">
             <img src="images/1.jpg" alt="Мероприятие 1" loading="lazy">
           </button>
-          <button class="gallery__item gallery__item--side reveal" data-index="1" aria-label="Открыть фото 2">
+          <button class="gallery__item gallery__item--pair reveal" data-index="1" aria-label="Открыть фото 2">
             <img src="images/1.2.jpg" alt="Мероприятие 2" loading="lazy">
           </button>
-          <button class="gallery__item reveal" data-index="2" aria-label="Открыть фото 3">
+          <button class="gallery__item gallery__item--pair reveal" data-index="2" aria-label="Открыть фото 3">
             <img src="images/3.jpg" alt="Мероприятие 3" loading="lazy">
           </button>
-          <button class="gallery__item reveal" data-index="3" aria-label="Открыть фото 4">
+          <button class="gallery__item gallery__item--trio reveal" data-index="3" aria-label="Открыть фото 4">
             <img src="images/5.jpg" alt="Мероприятие 4" loading="lazy">
           </button>
-          <button class="gallery__item reveal" data-index="4" aria-label="Открыть фото 5">
+          <button class="gallery__item gallery__item--trio reveal" data-index="4" aria-label="Открыть фото 5">
             <img src="images/4.jpg" alt="Мероприятие 5" loading="lazy">
           </button>
-          <button class="gallery__item reveal" data-index="5" aria-label="Открыть фото 6">
+          <button class="gallery__item gallery__item--trio reveal" data-index="5" aria-label="Открыть фото 6">
             <img src="images/6.jpg" alt="Мероприятие 6" loading="lazy">
           </button>
         </div>

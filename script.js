@@ -103,12 +103,15 @@
     const payload = {
       subject,
       from_name: SITE_NAME,
-      botcheck: '',
     };
 
     const formData = new FormData(form);
     for (const [key, value] of formData.entries()) {
-      if (key === 'consent' || key === 'botcheck') continue;
+      if (key === 'consent') continue;
+      if (key === 'botcheck') {
+        if (value) payload.botcheck = true;
+        continue;
+      }
       payload[key] = value;
     }
 
@@ -136,24 +139,51 @@
   async function submitViaWeb3Forms(form, subject) {
     if (!WEB3FORMS_KEY) return false;
 
+    const payload = buildFormPayload(form, subject);
+
+    const attempts = [
+      {
+        url: 'https://api.web3forms.com/submit',
+        body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...payload }),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      },
+      {
+        url: `https://api.web3forms.com/submit/${WEB3FORMS_KEY}`,
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      },
+    ];
+
+    for (const attempt of attempts) {
+      try {
+        const response = await fetch(attempt.url, {
+          method: 'POST',
+          headers: attempt.headers,
+          body: attempt.body,
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (result.success === true) return true;
+      } catch {
+        // try next method
+      }
+    }
+
     try {
-      const payload = {
-        access_key: WEB3FORMS_KEY,
-        ...buildFormPayload(form, subject),
-      };
+      const formData = new FormData();
+      formData.append('access_key', WEB3FORMS_KEY);
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          formData.append(key, value);
+        }
+      });
 
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(payload),
+        body: formData,
       });
 
-      if (!response.ok) return false;
-
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
       return result.success === true;
     } catch {
       return false;
@@ -232,8 +262,7 @@
       if (!sent) {
         if (errorEl) {
           errorEl.textContent =
-            errorEl.dataset.defaultError ||
-            `Не удалось отправить заявку. Напишите на ${CONTACT_EMAIL}.`;
+            'Не удалось отправить заявку. Проверьте настройки формы Lana в Web3Forms (получатель: kirill.heikkinen@ya.ru) и подтвердите FormSubmit по письму на почте.';
         }
         throw new Error('Submit failed');
       }

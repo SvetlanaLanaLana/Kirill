@@ -122,6 +122,10 @@
       delete payload.contact;
     }
 
+    if (payload.phone && !payload.email) {
+      payload.message = `Телефон: ${payload.phone}\n\n${payload.message || ''}`.trim();
+    }
+
     if (payload.review && !payload.message) {
       payload.message = payload.review;
     }
@@ -132,40 +136,64 @@
   async function submitViaWeb3Forms(form, subject) {
     if (!WEB3FORMS_KEY) return false;
 
-    const payload = {
-      access_key: WEB3FORMS_KEY,
-      ...buildFormPayload(form, subject),
-    };
+    try {
+      const payload = {
+        access_key: WEB3FORMS_KEY,
+        ...buildFormPayload(form, subject),
+      };
 
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
 
-    const result = await response.json();
-    return Boolean(result.success);
+      if (!response.ok) return false;
+
+      const result = await response.json();
+      return result.success === true;
+    } catch {
+      return false;
+    }
   }
 
   async function submitViaFormSubmit(form, subject) {
-    const formData = new FormData(form);
-    formData.append('_subject', subject);
-    formData.append('_template', 'table');
-    formData.append('_captcha', 'false');
+    try {
+      const payload = buildFormPayload(form, subject);
+      const formData = new FormData();
 
-    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`, {
-      method: 'POST',
-      headers: { Accept: 'application/json' },
-      body: formData,
-    });
+      Object.entries(payload).forEach(([key, value]) => {
+        if (['subject', 'from_name', 'botcheck'].includes(key) || !value) return;
+        formData.append(key, value);
+      });
 
-    if (!response.ok) return false;
+      formData.append('_subject', subject);
+      formData.append('_template', 'table');
+      formData.append('_captcha', 'false');
 
-    const result = await response.json().catch(() => ({}));
-    return result.success === 'true' || result.success === true || response.ok;
+      if (payload.email) {
+        formData.append('_replyto', payload.email);
+      }
+
+      const response = await fetch(
+        `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`,
+        {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: formData,
+        }
+      );
+
+      if (!response.ok) return false;
+
+      const result = await response.json().catch(() => ({}));
+      return result.success === 'true' || result.success === true;
+    } catch {
+      return false;
+    }
   }
 
   async function submitFormToEmail(form, subject, submitLabel) {

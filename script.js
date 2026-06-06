@@ -183,6 +183,14 @@
     }
 
     try {
+      if (window.location.protocol === 'file:') {
+        if (errorEl) {
+          errorEl.textContent =
+            'Форма не работает при открытии файла с компьютера. Откройте сайт по ссылке: https://svetlanalanalana.github.io/Kirill/';
+        }
+        throw new Error('file protocol');
+      }
+
       let sent = false;
 
       if (WEB3FORMS_KEY) {
@@ -195,9 +203,9 @@
 
       if (!sent) {
         if (errorEl) {
-          errorEl.textContent = WEB3FORMS_KEY
-            ? (errorEl.dataset.defaultError || 'Не удалось отправить. Попробуйте позже.')
-            : 'Форма ещё не настроена. Добавьте ключ Web3Forms в файл form-config.js (см. web3forms.com).';
+          errorEl.textContent =
+            errorEl.dataset.defaultError ||
+            `Не удалось отправить заявку. Напишите на ${CONTACT_EMAIL}.`;
         }
         throw new Error('Submit failed');
       }

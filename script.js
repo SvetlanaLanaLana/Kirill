@@ -94,7 +94,79 @@
   const contactOpenBtn = document.getElementById('contact-open-btn');
   const contactEmailLink = document.getElementById('contact-email-link');
   const contactPopupForm = document.getElementById('contact-popup-form');
-  const CONTACT_EMAIL = 'kirill.heikkinen@ya.ru';
+  const FORM_CONFIG = window.FORM_CONFIG || {};
+  const WEB3FORMS_KEY = FORM_CONFIG.web3formsKey || '';
+  const CONTACT_EMAIL = FORM_CONFIG.recipientEmail || 'kirill.heikkinen@ya.ru';
+  const SITE_NAME = FORM_CONFIG.siteName || 'Сайт «Две судьбы»';
+
+  function buildFormPayload(form, subject) {
+    const payload = {
+      subject,
+      from_name: SITE_NAME,
+      botcheck: '',
+    };
+
+    const formData = new FormData(form);
+    for (const [key, value] of formData.entries()) {
+      if (key === 'consent' || key === 'botcheck') continue;
+      payload[key] = value;
+    }
+
+    if (payload.contact && !payload.email) {
+      if (String(payload.contact).includes('@')) {
+        payload.email = payload.contact;
+        payload.replyto = payload.contact;
+      } else {
+        payload.phone = payload.contact;
+      }
+      delete payload.contact;
+    }
+
+    if (payload.review && !payload.message) {
+      payload.message = payload.review;
+    }
+
+    return payload;
+  }
+
+  async function submitViaWeb3Forms(form, subject) {
+    if (!WEB3FORMS_KEY) return false;
+
+    const payload = {
+      access_key: WEB3FORMS_KEY,
+      ...buildFormPayload(form, subject),
+    };
+
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+    return Boolean(result.success);
+  }
+
+  async function submitViaFormSubmit(form, subject) {
+    const formData = new FormData(form);
+    formData.append('_subject', subject);
+    formData.append('_template', 'table');
+    formData.append('_captcha', 'false');
+
+    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`, {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: formData,
+    });
+
+    if (!response.ok) return false;
+
+    const result = await response.json().catch(() => ({}));
+    return result.success === 'true' || result.success === true || response.ok;
+  }
 
   async function submitFormToEmail(form, subject, submitLabel) {
     const successEl = form.querySelector('.form-success');
@@ -105,24 +177,30 @@
     if (successEl) successEl.hidden = true;
     if (errorEl) errorEl.hidden = true;
 
-    const formData = new FormData(form);
-    formData.append('_subject', subject);
-    formData.append('_template', 'table');
-    formData.append('_captcha', 'false');
-
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Отправка…';
     }
 
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: formData,
-      });
+      let sent = false;
 
-      if (!response.ok) throw new Error('Submit failed');
+      if (WEB3FORMS_KEY) {
+        sent = await submitViaWeb3Forms(form, subject);
+      }
+
+      if (!sent) {
+        sent = await submitViaFormSubmit(form, subject);
+      }
+
+      if (!sent) {
+        if (errorEl) {
+          errorEl.textContent = WEB3FORMS_KEY
+            ? (errorEl.dataset.defaultError || 'Не удалось отправить. Попробуйте позже.')
+            : 'Форма ещё не настроена. Добавьте ключ Web3Forms в файл form-config.js (см. web3forms.com).';
+        }
+        throw new Error('Submit failed');
+      }
 
       if (successEl) successEl.hidden = false;
       form.reset();

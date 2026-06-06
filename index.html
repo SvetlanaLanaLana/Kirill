@@ -218,6 +218,7 @@
           </div>
 
           <form class="contact-form reveal" id="festival-form">
+            <input type="checkbox" name="botcheck" class="form-botcheck" tabindex="-1" autocomplete="off">
             <h3 class="contact-form__title">Обратная связь для организаторов фестивалей и кинопоказов</h3>
             <div class="form-group">
               <label for="org-name">Организация / фестиваль</label>
@@ -240,7 +241,7 @@
             </div>
             <button type="submit" class="btn btn--primary btn--full">Отправить заявку</button>
             <p class="form-success" hidden>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
-            <p class="form-error" hidden>Не удалось отправить заявку. Попробуйте позже или напишите на kirill.heikkinen@ya.ru</p>
+            <p class="form-error" hidden data-default-error="Не удалось отправить заявку. Попробуйте позже.">Не удалось отправить заявку. Попробуйте позже.</p>
           </form>
         </div>
       </div>
@@ -267,6 +268,7 @@
         </div>
 
         <form class="review-form reveal" id="review-form">
+          <input type="checkbox" name="botcheck" class="form-botcheck" tabindex="-1" autocomplete="off">
           <h3 class="review-form__title">Оставить отзыв</h3>
           <div class="form-row">
             <div class="form-group">
@@ -305,6 +307,7 @@
     <div class="modal__panel">
       <button type="button" class="modal__close" aria-label="Закрыть" data-close-modal>&times;</button>
       <form class="contact-form" id="contact-popup-form" novalidate>
+        <input type="checkbox" name="botcheck" class="form-botcheck" tabindex="-1" autocomplete="off">
         <h3 class="contact-form__title" id="contact-modal-title">Написать нам</h3>
         <div class="form-group">
           <label for="popup-name">Имя</label>
@@ -325,7 +328,7 @@
         </div>
         <button type="submit" class="btn btn--primary btn--full">Отправить заявку</button>
         <p class="form-success" hidden>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
-        <p class="form-error" hidden>Не удалось отправить заявку. Попробуйте позже или напишите на kirill.heikkinen@ya.ru</p>
+        <p class="form-error" hidden data-default-error="Не удалось отправить заявку. Попробуйте позже.">Не удалось отправить заявку. Попробуйте позже.</p>
       </form>
     </div>
   </div>
@@ -338,6 +341,7 @@
     <img class="lightbox__img" src="" alt="">
   </div>
 
+  <script src="form-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

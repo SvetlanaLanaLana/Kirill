@@ -772,6 +772,13 @@ a:hover { color: #dfc87a; }
   cursor: pointer;
 }
 
+.form-botcheck {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ===== Modal ===== */
 .modal {
   position: fixed;

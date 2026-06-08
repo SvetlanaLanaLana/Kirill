@@ -394,6 +394,15 @@
     });
   }
 
+  // privacy.html на хостинге может отдавать index.html — прокрутка к разделу
+  if (/privacy/i.test(window.location.pathname) && !window.location.hash) {
+    const privacySection = document.getElementById('privacy');
+    if (privacySection) {
+      history.replaceState(null, '', '#privacy');
+      privacySection.scrollIntoView();
+    }
+  }
+
   // Header shadow on scroll
   const header = document.querySelector('.header');
   window.addEventListener(

@@ -909,13 +909,18 @@ a:hover { color: #dfc87a; }
   margin-bottom: 2rem;
 }
 
-.legal__block h2 {
+.legal__block h2,
+.legal__block h3 {
   font-family: var(--font-display);
   font-size: 1.35rem;
   font-weight: 400;
   letter-spacing: 0.03em;
   margin-bottom: 0.75rem;
   color: var(--accent);
+}
+
+.legal__block h3 {
+  font-size: 1.15rem;
 }
 
 .legal__block p,

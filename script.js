@@ -137,7 +137,7 @@
   }
 
   async function submitViaWeb3Forms(form, subject) {
-    if (!WEB3FORMS_KEY) return false;
+    if (!WEB3FORMS_KEY) return { ok: false };
 
     const payload = buildFormPayload(form, subject);
 
@@ -163,7 +163,7 @@
         });
 
         const result = await response.json().catch(() => ({}));
-        if (result.success === true) return true;
+        if (result.success === true) return { ok: true };
       } catch {
         // try next method
       }
@@ -184,9 +184,10 @@
       });
 
       const result = await response.json().catch(() => ({}));
-      return result.success === true;
+      if (result.success === true) return { ok: true };
+      return { ok: false, message: result.message || '' };
     } catch {
-      return false;
+      return { ok: false };
     }
   }
 
@@ -217,12 +218,14 @@
         }
       );
 
-      if (!response.ok) return false;
-
       const result = await response.json().catch(() => ({}));
-      return result.success === 'true' || result.success === true;
+      const ok = result.success === 'true' || result.success === true;
+      return {
+        ok,
+        needsActivation: /activate|activation|confirm/i.test(String(result.message || '')),
+      };
     } catch {
-      return false;
+      return { ok: false };
     }
   }
 
@@ -249,20 +252,22 @@
         throw new Error('file protocol');
       }
 
-      let sent = false;
+      const [web3Result, formSubmitResult] = await Promise.all([
+        WEB3FORMS_KEY ? submitViaWeb3Forms(form, subject) : Promise.resolve({ ok: false }),
+        submitViaFormSubmit(form, subject),
+      ]);
 
-      if (WEB3FORMS_KEY) {
-        sent = await submitViaWeb3Forms(form, subject);
-      }
-
-      if (!sent) {
-        sent = await submitViaFormSubmit(form, subject);
-      }
+      const sent = web3Result.ok || formSubmitResult.ok;
 
       if (!sent) {
         if (errorEl) {
-          errorEl.textContent =
-            'Не удалось отправить заявку. Проверьте настройки формы Lana в Web3Forms (получатель: kirill.heikkinen@ya.ru) и подтвердите FormSubmit по письму на почте.';
+          if (formSubmitResult.needsActivation) {
+            errorEl.textContent =
+              `Откройте ${CONTACT_EMAIL} и подтвердите FormSubmit по ссылке из письма, затем отправьте форму снова.`;
+          } else {
+            errorEl.textContent =
+              `Не удалось отправить. Напишите на ${CONTACT_EMAIL} или обратитесь в support@web3forms.com — укажите домен newproductionfilm.ru для разрешения.`;
+          }
         }
         throw new Error('Submit failed');
       }

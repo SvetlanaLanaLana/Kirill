@@ -887,6 +887,60 @@ a:hover { color: #dfc87a; }
   text-transform: uppercase;
 }
 
+.footer__legal {
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ===== Legal pages ===== */
+.legal__content {
+  max-width: 720px;
+}
+
+.legal__updated {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 2.5rem;
+}
+
+.legal__block {
+  margin-bottom: 2rem;
+}
+
+.legal__block h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+}
+
+.legal__block p,
+.legal__block li {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 300;
+}
+
+.legal__block p {
+  margin-bottom: 0.75rem;
+}
+
+.legal__block ul {
+  margin: 0.5rem 0 0.75rem 1.25rem;
+}
+
+.legal__block li {
+  margin-bottom: 0.35rem;
+}
+
+.legal__back {
+  margin-top: 3rem;
+}
+
 /* ===== Lightbox ===== */
 .lightbox {
   position: fixed;

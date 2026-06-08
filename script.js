@@ -322,21 +322,26 @@
     });
   }
 
+  function hasFormConsent(form) {
+    const consent = form.querySelector('[name="consent"]');
+    if (!consent?.checked) {
+      consent?.focus();
+      return false;
+    }
+    return true;
+  }
+
   if (contactPopupForm) {
     contactPopupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const consent = contactPopupForm.querySelector('#popup-consent');
       const errorEl = contactPopupForm.querySelector('.form-error');
       const successEl = contactPopupForm.querySelector('.form-success');
 
       if (successEl) successEl.hidden = true;
       if (errorEl) errorEl.hidden = true;
 
-      if (!consent?.checked) {
-        consent?.focus();
-        return;
-      }
+      if (!hasFormConsent(contactPopupForm)) return;
 
       const sent = await submitFormToEmail(
         contactPopupForm,
@@ -354,6 +359,7 @@
   if (festivalForm) {
     festivalForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!hasFormConsent(festivalForm)) return;
       await submitFormToEmail(
         festivalForm,
         'Заявка организатора с сайта «Две судьбы»',
@@ -365,6 +371,7 @@
   if (reviewForm) {
     reviewForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!hasFormConsent(reviewForm)) return;
       await submitFormToEmail(
         reviewForm,
         'Отзыв с сайта «Две судьбы»',
@@ -392,15 +399,6 @@
       watchVideoBtn.remove();
       mainVideoPlayer.appendChild(iframe);
     });
-  }
-
-  // privacy.html на хостинге может отдавать index.html — прокрутка к разделу
-  if (/privacy/i.test(window.location.pathname) && !window.location.hash) {
-    const privacySection = document.getElementById('privacy');
-    if (privacySection) {
-      history.replaceState(null, '', '#privacy');
-      privacySection.scrollIntoView();
-    }
   }
 
   // Header shadow on scroll

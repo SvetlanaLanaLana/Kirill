@@ -289,8 +289,15 @@
     }
   }
 
+  const closeMobileNav = () => {
+    if (!navList || !toggle) return;
+    navList.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
   const openContactModal = () => {
     if (!contactModal) return;
+    closeMobileNav();
     contactModal.hidden = false;
     contactModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
